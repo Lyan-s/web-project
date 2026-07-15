@@ -21,6 +21,7 @@ from expenses import views
 
 
 urlpatterns = [
+    path('', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='expenses/login.html'), name='login'),
