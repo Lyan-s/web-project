@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Reports</h2>
+<h5 class="mb-4">Overall Balance: {{ balance }}</h5>
+
+<h4>Monthly Income</h4>
+<table class="table table-striped">
+    <thead><tr><th>Month</th><th>Total</th></tr></thead>
+    <tbody>
+        {% for row in monthly_income %}
+        <tr><td>{{ row.month|date:"F Y" }}</td><td>{{ row.total }}</td></tr>
+        {% empty %}
+        <tr><td colspan="2">No income recorded yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Monthly Expenses</h4>
+<table class="table table-striped">
+    <thead><tr><th>Month</th><th>Total</th></tr></thead>
+    <tbody>
+        {% for row in monthly_expenses %}
+        <tr><td>{{ row.month|date:"F Y" }}</td><td>{{ row.total }}</td></tr>
+        {% empty %}
+        <tr><td colspan="2">No expenses recorded yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Spending by Category</h4>
+<table class="table table-striped">
+    <thead><tr><th>Category</th><th>Total</th></tr></thead>
+    <tbody>
+        {% for row in category_spending %}
+        <tr><td>{{ row.category__name|default:"Uncategorized" }}</td><td>{{ row.total }}</td></tr>
+        {% empty %}
+        <tr><td colspan="2">No expenses recorded yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

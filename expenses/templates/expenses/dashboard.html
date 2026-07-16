@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h6 class="card-title">Total Income</h6>
+                <h3>{{ total_income }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h6 class="card-title">Total Expenses</h6>
+                <h3>{{ total_expenses }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h6 class="card-title">Balance</h6>
+                <h3>{{ balance }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>Recent Transactions</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in recent_transactions %}
+        <tr>
+            <td>{{ transaction.title }}</td>
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.type }}</td>
+            <td>{{ transaction.category }}</td>
+            <td>{{ transaction.date_created }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No transactions yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'transaction_list' %}" class="btn btn-outline-primary">View All Transactions</a>
+<a href="{% url 'reports' %}" class="btn btn-outline-secondary">Reports</a>
+<a href="{% url 'add_transaction' %}" class="btn btn-primary">Add Transaction</a>
+{% endblock %}

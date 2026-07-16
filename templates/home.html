@@ -1,17 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Expense Tracker</title>
-</head>
-<body>
-    <h2>Welcome to Smart Expense Tracker</h2>
-    {% if user.is_authenticated %}
-     <p>Hello,{{ user.username }}!</p>
-     <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-    <a href="{% url 'login' %}">login</a>|<a href="{% url 'register' %}">Register</a>
-    {% endif %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row align-items-center hero-bg">
+    <div class="col-md-6">
+        <h2>Welcome to Smart Expense Tracker</h2>
+        {% if user.is_authenticated %}
+            <p class="lead">Hello, {{ user.username }}! Ready to check your finances?</p>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+        {% else %}
+            <p class="lead">Track your income and expenses, and see exactly where your money goes.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+        {% endif %}
+    </div>
+    <div class="col-md-6 text-center">
+        <img src="{% static 'images/savings.jpg' %}" alt="Savings illustration" class="img-fluid" style="max-height: 300px;">
+                    
+    </div>
+</div>
+
+<hr class="my-5">
+
+<div class="row text-center">
+    <div class="col-md-4">
+        <h4>💰 Track Income & Expenses</h4>
+        <p>Log every transaction and always know your balance.</p>
+    </div>
+    <div class="col-md-4">
+        <h4>📊 See Reports</h4>
+        <p>View monthly trends and spending by category.</p>
+    </div>
+    <div class="col-md-4">
+        <h4>🔍 Search & Filter</h4>
+        <p>Quickly find any transaction you're looking for.</p>
+    </div>
+</div>
+{% endblock %}

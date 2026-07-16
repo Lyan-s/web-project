@@ -26,4 +26,13 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='expenses/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+
+    path('transaction/', views.transaction_list, name='transaction_list'),
+    path('transaction/add/', views.add_transaction, name='add_transaction'),
+    path('transactions/<int:pk>/edit/',views.edit_transaction, name='edit_transaction'),
+    path('transactions/<int:pk>/delete/', views.delete_transaction, name='delete_transaction'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('reports/', views.reports, name='reports'),
+    path('categories/add/', views.add_category, name='add_category'),
+
 ]
