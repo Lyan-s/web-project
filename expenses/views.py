@@ -12,6 +12,8 @@ from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from io import BytesIO
+from .models import Transaction, Category, Profile
+from .forms import TransactionForm, RegisterForm, CategoryForm, ProfileForm
 
 
 # Create your views here.
@@ -159,6 +161,16 @@ def add_category(request):
     return render(request, 'expenses/add_category.html', {'form': form, 'next': next_page})
 @login_required
 def profile(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+
     transactions = Transaction.objects.filter(user=request.user)
     total_income = transactions.filter(type='Income').aggregate(Sum('amount'))['amount__sum'] or 0
     total_expenses = transactions.filter(type='Expense').aggregate(Sum('amount'))['amount__sum'] or 0
@@ -166,6 +178,8 @@ def profile(request):
     total_transactions = transactions.count()
 
     context = {
+        'form': form,
+        'profile': profile,
         'total_income': total_income,
         'total_expenses': total_expenses,
         'balance': balance,

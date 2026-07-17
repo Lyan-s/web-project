@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Transaction,Budget
 from .models import Category
+from .models import Profile
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -31,3 +32,11 @@ class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
         fields = ['category', 'limit']
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['picture']
+        widgets = {
+            'picture': forms.FileInput(attrs={'id': 'id_picture', 'class': 'd-none'}),
+        }

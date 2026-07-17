@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from expenses import views
+from django.conf import settings                      # NEW
+from django.conf.urls.static import static            # NEW
 
 
 urlpatterns = [
@@ -42,3 +44,6 @@ urlpatterns = [
     path('budgets/delete/<int:pk>/', views.delete_budget, name='delete_budget'),
 
 ]
+
+if settings.DEBUG:                                                          
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  

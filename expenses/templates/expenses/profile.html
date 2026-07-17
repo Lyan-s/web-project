@@ -9,12 +9,24 @@
 <div class="row">
     <div class="col-md-4 mb-4">
         <div class="card text-center p-4">
-            <i class="bi bi-person-circle text-info" style="font-size: 5rem;"></i>
+            {% if profile.picture %}
+                <img src="{{ profile.picture.url }}" alt="Profile picture" class="profile-picture mx-auto">
+            {% else %}
+                <i class="bi bi-person-circle text-info" style="font-size: 5rem;"></i>
+            {% endif %}
             <h4 class="mt-3">{{ user.username }}</h4>
             <p class="text-muted">{{ user.email }}</p>
             <p class="text-muted">
                 <i class="bi bi-calendar3"></i><strong>Joined {{ user.date_joined|date:"F Y" }}</strong> 
             </p>
+
+            <form method="POST" enctype="multipart/form-data" class="mt-3" id="picture-form">
+                {% csrf_token %}
+                <label for="id_picture" class="picture-edit-btn" title="Change picture">
+                    <i class="bi bi-camera-fill"></i>
+                </label>
+                {{ form.picture }}
+            </form>
         </div>
     </div>
 
@@ -67,4 +79,9 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('id_picture').addEventListener('change', function() {
+        document.getElementById('picture-form').submit();
+    });
+</script>
 {% endblock %}
