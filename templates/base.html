@@ -4,33 +4,61 @@
 <head>
     <title>{% block title %}Smart Expense Tracker{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>body {
-        background-color: #eef2f7;
-    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    .hero-bg {
-        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("{% static 'images/hero-bg.jpg' %}");
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 60px 20px;
-        border-radius: 10px;
-    }
-</style>
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('select').forEach(function(select) {
+                new Choices(select, {
+                    searchEnabled: false,
+                    itemSelectText: '',
+                });
+            });
+        });
+    </script>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <a class="navbar-brand" href="{% url 'home' %}">Smart Expense Tracker</a>
-    {% if user.is_authenticated %}
-        <div>
-            <a class="btn btn-outline-light btn-sm" href="{% url 'dashboard' %}">Dashboard</a>
-            <a class="btn btn-outline-light btn-sm" href="{% url 'transaction_list' %}">Transactions</a>
-            <a class="btn btn-outline-light btn-sm" href="{% url 'reports' %}">Reports</a>
-            <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Logout</a>
+
+    <nav class="navbar navbar-expand-lg px-4">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="bi bi-graph-up-arrow text-info"></i> Smart Expense Tracker
+        </a>
+
+        <div class="ms-auto d-flex align-items-center gap-2">
+            {% if user.is_authenticated %}
+                <a class="nav-link-btn" href="{% url 'dashboard' %}">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+                <a class="nav-link-btn" href="{% url 'transaction_list' %}">
+                    <i class="bi bi-list-ul"></i> Transactions
+                </a>
+                <a class="nav-link-btn" href="{% url 'reports' %}">
+                    <i class="bi bi-bar-chart-line"></i> Reports
+                </a>
+                <a class="nav-link-btn" href="{% url 'budget_list' %}">
+                    <i class="bi bi-wallet2"></i> Budgets
+                </a>
+                <a class="nav-link-btn text-danger-link" href="{% url 'logout' %}">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+                <a href="{% url 'profile' %}" class="navbar-avatar" title="{{ user.username }}">
+                    {{ user.username|first|upper }}
+                </a>
+            {% else %}
+                <a class="nav-link-btn" href="{% url 'login' %}">
+                    <i class="bi bi-box-arrow-in-right"></i> Login
+                </a>
+                <a class="nav-link-btn" href="{% url 'register' %}">
+                    <i class="bi bi-person-plus"></i> Register
+                </a>
+            {% endif %}
         </div>
-    {% endif %}
-</nav>
+    </nav>
 
 <div class="container mt-4">
     {% block content %}

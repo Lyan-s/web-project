@@ -34,5 +34,11 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('reports/', views.reports, name='reports'),
     path('categories/add/', views.add_category, name='add_category'),
+    path('profile/', views.profile, name='profile'),
+    path('export/csv/', views.export_csv, name='export_csv'),
+    path('export/pdf/', views.export_pdf, name='export_pdf'),
+    path('budgets/', views.budget_list, name='budget_list'),
+    path('budgets/add/', views.add_budget, name='add_budget'),
+    path('budgets/delete/<int:pk>/', views.delete_budget, name='delete_budget'),
 
 ]
