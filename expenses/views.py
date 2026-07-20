@@ -78,7 +78,7 @@ def edit_transaction(request, pk):
     else:
         form = TransactionForm(instance=transaction)
 
-    return render(request, 'expenses/edit_transaction.html',{'form', form})
+    return render(request, 'expenses/edit_transaction.html', {'form': form})
 
 @login_required
 def delete_transaction(request, pk):
